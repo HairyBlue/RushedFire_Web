@@ -43,7 +43,7 @@ export const checkUsernameValidity = (value) => {
     listAuth.hasWhiteSpase = true;
     //   return "Username must not contain Whitespaces.";
   }
-  const isValidLength = /^.{4,8}$/;
+  const isValidLength = /^.{4,16}$/;
   if (!isValidLength.test(value)) {
     listAuth.notValidLength = true;
     //   return "Username must be 4 to 8 Characters Long.";

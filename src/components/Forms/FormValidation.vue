@@ -39,19 +39,19 @@ const confirmPassword = ref(false);
 
 //  todo: refactor if can \|/
 watchEffect(() => {
-  if (props.contact !== undefined) {
+  if (props.contact) {
     validNumberLength.value = checkContactNumer(props.contact, props.countryCode);
   }
-  if (props.email !== undefined) {
+  if (props.email) {
     validEmail.value = checkEmailValidity(props.email);
   }
 
-  if (props.username !== undefined) {
+  if (props.username) {
     const bool = checkUsernameValidity(props.username);
     whiteSpase.value = bool.hasWhiteSpase;
     validLength.value = bool.notValidLength;
   }
-  if (props.password !== undefined) {
+  if (props.password) {
     const bool = checkPasswordValidity(props.password);
     whiteSpase.value = bool.hasWhiteSpase;
     validLength.value = bool.notValidLength;
@@ -60,7 +60,7 @@ watchEffect(() => {
     containsNumber.value = bool.notContainsNumber;
     containsSymbol.value = bool.notContainsSymbol;
   }
-  if (props.confirm_password !== undefined) {
+  if (props.confirm_password) {
     confirmPassword.value = checkConfirmPassword(
       props.passwordComp,
       props.confirm_password
