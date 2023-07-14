@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, useRouter } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import Api from "../api/adminapi";
 import jwt_decode from "jwt-decode";
 
@@ -24,7 +24,7 @@ const router = createRouter({
       path: "/auth/team-login",
       name: "TeamLogin",
       component: () => import("../views/TeamAuth/Login.vue"),
-      meta: { requireNoToken: true },
+      meta: { requireToken: true },
     },
     {
       path: "/v1/auth/admin-signup",
@@ -43,6 +43,13 @@ const router = createRouter({
       name: "Dashboard",
       component: () => import("../views/Dashboard.vue"),
       meta: { requireAuth: true },
+      children: [
+        {
+          path: '',
+          name: 'index',
+          component: ()=>import("../components/Main/Dashboard/Index.vue")
+        }
+      ]
     },
     {
       path: "/error",
@@ -59,36 +66,37 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   const requiresAuth = to.matched.some((record) => record.meta.requireAuth);
-  const requiresNoAdmin = to.matched.some(
-    (record) => record.meta.requireNoAdmin
-  );
+  const requiresNoAdmin = to.matched.some((record) => record.meta.requireNoAdmin);
   const requiresToken = to.matched.some((record) => record.meta.requireToken);
-  const isAuthenticed = JSON.parse(localStorage.getItem("auth"));
 
+  const isAuthenticated = JSON.parse(localStorage.getItem("auth"));
+  
   try {
     if (requiresNoAdmin) {
       const result = await Api.prototype.getadmin();
-      if (result.status == 200) {
+      if (result?.status == 200) {
         return next();
       }
-      throw Error;
-    } else if (
-      requiresAuth &&
-      (isAuthenticed.role == "Citizen" || isAuthenticed == null)
-    ) {
-      next({ name: "PageNotFound" });
-    } else if (requiresToken && isAuthenticed !== null) {
-      const role = jwt_decode(isAuthenticed.token).role;
-      if ((role == "Admin" || role == "Team")) {
+    }
+    if (requiresAuth && isAuthenticated == null) {
+      return next({name: "Home"})
+    }
+    if (requiresAuth && isAuthenticated.role == "Citizen") {
+      return next({ name: "PageNotFound" });
+    }
+    if (requiresToken && isAuthenticated !== null) {
+      const role = jwt_decode(isAuthenticated.token).role;
+      if (( role == "Admin" || role == "Team")) {
         return next({name: "Dashboard"});
       }
-      next({ name: "PageNotFound" })
-    } else {
-      next();
-    }   
+     return  next({ name: "PageNotFound" })
+    }
+    next();
   } catch (error) {
-    if (error.name == "AxiosError" && error.response.status == 400) {
+    if (error.name == "AxiosError" && error.response?.status == 400) {
       next({ name: "PageNotFound" });
+    } else {
+      next({name: "NetworkError"})
     }
   }
 });

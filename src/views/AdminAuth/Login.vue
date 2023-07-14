@@ -14,6 +14,7 @@ const onSubmit = async () => {
       password: password.value,
     };
     const result = await Api.prototype.login(data);
+    console.log(result)
     if (result.status == 200) {
       localStorage.setItem("auth", JSON.stringify({ token: result.data.token }))
       return router.push({ name: "Dashboard", replace: true });

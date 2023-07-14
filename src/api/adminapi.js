@@ -1,8 +1,9 @@
 import axios from "axios";
-
+const  bearerToken = localStorage.getItem("auth")
 const axiosInstance = axios.create({
-    baseURL: "http://localhost:5000/admin"
+    baseURL: "http://localhost:5000/admin",
     // localstorage
+    headers: {Authorization: `Bearer ${bearerToken}`}
 })
 
 export default class Api{
@@ -11,6 +12,11 @@ export default class Api{
         const result = await axiosInstance.get("/getadmin")
         return result
     }
+
+    async getDashboardData() {
+        const result = await axiosInstance.get("/dashboard")
+        return result
+    } 
 
     //POST
     async signup(data) {
