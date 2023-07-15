@@ -7,7 +7,7 @@ import SideNav from "../components/Main/SideNav.vue"
 
 const path = useRoute().path;
 const currentPath = ref(path)
-watch(path, (newValue) => {
+watch(currentPath, (newValue) => {
     currentPath.value = newValue
 })
 </script>
@@ -21,7 +21,7 @@ watch(path, (newValue) => {
             <div class="h-[5%] p-2 bg-white border border-b-2 border-slate-300">
                 <div class="flex flex-row justify-start items-center gap-4">
                     <Icon icon="material-symbols:menu" class="xl:hidden w-8 h-8" />
-                    <p>{{ currentPath }}</p>
+                    <p><span class="font-semibold">{{ currentPath }}</span></p>
                 </div>
             </div>
             <div class="max-md:p-2 p-8 h-[95%] bg-slate-100 overflow-auto">

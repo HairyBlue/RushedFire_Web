@@ -5,21 +5,38 @@ import { useDataStore } from "../../store/DataStore"
 
 const dataStore = useDataStore();
 const chartCanva = ref(null)
-let data;
-let finalData;
+const finalData = ref(null);
 const props = ref("alarm")
+let data;
+let chartInstance;
 
-const createLineChart = async () => {
-    // await dataStore.dashboardData()
-    // data = toRaw(dataStore.data.data.results)
+
+// await dataStore.dashboardData()
+// data = toRaw(dataStore.data.data.results)
+
+onMounted(() => {
+    createChart()
+})
+
+function isClick(value) {
+    props.value = value
+    createChart()
+}
+
+function createChart() {
+    if (chartInstance) {
+        chartInstance.destroy()
+    }
     if (props.value == "alarm") {
-        finalData = [10, 23, 54, 32, 78, 43, 99, 12, 78, 12, 10, 23]
+
+        finalData.value = [10, 23, 54, 32, 78, 43, 99, 12, 78, 12, 10, 23]
         // finalData = data.alarm.alarmPost
-    } else {
-        finalData = [90, 23, 54, 32, 78, 43, 10, 12, 78, 12, 10, 23]
+    }
+    if (props.value == "report") {
+        finalData.value = [90, 23, 54, 32, 78, 43, 10, 12, 78, 12, 10, 100]
         // finalData = data.report.reportPost
     }
-    new Chart(
+    chartInstance = new Chart(
         chartCanva.value.getContext('2d'),
         {
             type: "line",
@@ -28,7 +45,7 @@ const createLineChart = async () => {
                 datasets: [
                     {
                         label: "",
-                        data: finalData,
+                        data: toRaw(finalData.value),
                         borderWidth: 5,
                         fill: false,
                         cubicInterpolationMode: 'monotone',
@@ -45,9 +62,6 @@ const createLineChart = async () => {
 }
 
 
-onMounted(() => {
-    createLineChart();
-})
 
 </script>
 
@@ -56,11 +70,15 @@ onMounted(() => {
         <div class="absolute m-auto w-[86vw] h-[35vh]">
             <canvas ref="chartCanva"> </canvas>
         </div>
-        <div class="absolute top-0 right-0 flex flex-row">
-            <div class="pl-4 pr-4 border border-red-400">
+        <div class="absolute top-0 right-0 flex flex-row font-semibold">
+            <div @click="isClick('alarm')"
+                :class="props == 'alarm' ? 'text-white bg-red-400' : 'border-2 text-red-500 border-red-400'"
+                class="pl-4 pr-4">
                 Alarm
             </div>
-            <div class="pl-4 pr-4 border border-red-400">
+            <div @click="isClick('report')"
+                :class="props == 'report' ? 'text-white bg-red-400' : 'border-2 text-red-500 border-red-400'"
+                class="pl-4 pr-4">
                 Report
             </div>
         </div>
