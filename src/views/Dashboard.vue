@@ -1,14 +1,25 @@
 <script setup>
-import { watch, ref } from "vue";
+import { watchEffect, ref, computed } from "vue";
 import { useRoute } from "vue-router"
 import { Icon } from '@iconify/vue';
 import SideNav from "../components/Main/SideNav.vue"
 
 
-const path = useRoute().path;
-const currentPath = ref(path)
-watch(currentPath, (newValue) => {
-    currentPath.value = newValue
+const route = useRoute();
+const currentPath = ref(route.path)
+
+watchEffect(() => {
+    currentPath.value = route.path
+    //     console.log(currentPath.value.split("/"))
+})
+
+const breadCrumbsSegments = computed(() => {
+    const segments = currentPath.value.split("/").filter(segment => segment !== "");
+    return segments.map((segment, index) => ({
+        name: segment,
+        path: `/${segments.slice(0, index + 1).join("/")}`
+    }))
+
 })
 </script>
 
@@ -21,7 +32,14 @@ watch(currentPath, (newValue) => {
             <div class="h-[5%] p-2 bg-white border border-b-2 border-slate-300">
                 <div class="flex flex-row justify-start items-center gap-4">
                     <Icon icon="material-symbols:menu" class="xl:hidden w-8 h-8" />
-                    <p><span class="font-semibold">{{ currentPath }}</span></p>
+                    <ul class="flex flex-row">
+                        <li v-for="(segment, index) in breadCrumbsSegments" :key="index" class="no-underline list-none">
+                            <router-link :to="segment.path" class="text-orange-400">
+                                {{ segment.name }}
+                            </router-link>
+                            <span v-if="index !== breadCrumbsSegments.length - 1">/</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div class="max-md:p-2 p-8 h-[95%] bg-slate-100 overflow-auto">

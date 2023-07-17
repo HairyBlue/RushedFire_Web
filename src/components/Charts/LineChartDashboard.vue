@@ -6,15 +6,15 @@ import { useDataStore } from "../../store/DataStore"
 const dataStore = useDataStore();
 const chartCanva = ref(null)
 const finalData = ref(null);
-const props = ref("alarm")
+const props = ref("alarms")
 let data;
 let chartInstance;
 
 
-// await dataStore.dashboardData()
-// data = toRaw(dataStore.data.data.results)
 
 onMounted(() => {
+    // await dataStore.dashboardData()
+    // data = toRaw(dataStore.data.data.results)
     createChart()
 })
 
@@ -27,14 +27,14 @@ function createChart() {
     if (chartInstance) {
         chartInstance.destroy()
     }
-    if (props.value == "alarm") {
+    if (props.value == "alarms") {
 
         finalData.value = [10, 23, 54, 32, 78, 43, 99, 12, 78, 12, 10, 23]
-        // finalData = data.alarm.alarmPost
+        // finalData.value = data.alarm.alarmPost
     }
-    if (props.value == "report") {
-        finalData.value = [90, 23, 54, 32, 78, 43, 10, 12, 78, 12, 10, 100]
-        // finalData = data.report.reportPost
+    if (props.value == "reports") {
+        finalData.value = [90, 100, 54, 32, 78, 43, 10, 12, 78, 12, 10, 100]
+        // finalData.value = data.report.reportPost
     }
     chartInstance = new Chart(
         chartCanva.value.getContext('2d'),
@@ -67,18 +67,22 @@ function createChart() {
 
 <template>
     <div class="relative ">
+        <div class="ml-2">
+            <p class="text-sm">Total Incidents This Year</p>
+            <p class="text-2xl font-semibold">{{ props.toLocaleUpperCase() }}</p>
+        </div>
         <div class="absolute m-auto w-[86vw] h-[35vh]">
             <canvas ref="chartCanva"> </canvas>
         </div>
         <div class="absolute top-0 right-0 flex flex-row font-semibold">
-            <div @click="isClick('alarm')"
-                :class="props == 'alarm' ? 'text-white bg-red-400' : 'border-2 text-red-500 border-red-400'"
-                class="pl-4 pr-4">
+            <div @click="isClick('alarms')"
+                :class="props == 'alarms' ? 'text-white bg-red-400' : 'border-2 text-red-500 border-red-400'"
+                class="pl-4 pr-4 cursor-default">
                 Alarm
             </div>
-            <div @click="isClick('report')"
-                :class="props == 'report' ? 'text-white bg-red-400' : 'border-2 text-red-500 border-red-400'"
-                class="pl-4 pr-4">
+            <div @click="isClick('reports')"
+                :class="props == 'reports' ? 'text-white bg-red-400' : 'border-2 text-red-500 border-red-400'"
+                class="pl-4 pr-4 cursor-default">
                 Report
             </div>
         </div>

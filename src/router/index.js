@@ -44,11 +44,110 @@ const router = createRouter({
       component: () => import("../views/Dashboard.vue"),
       meta: { requireAuth: true },
       children: [
+      
+       // dashboard
         {
           path: '',
-          name: 'index',
+          name: 'Dashboard-Index',
           component: ()=>import("../components/Main/Dashboard/Index.vue")
+        },
+
+        //alarm
+        {
+          path: "alarm",
+          name: "Alarm",
+          component: ()=>import("../components/Main/Alarm/Index.vue"),
+          children: [
+            {
+              path: '',
+              name: 'Alarm-Overview',
+              component: ()=>import("../components/Main/Alarm/Overview.vue")
+            },
+            {
+              path: 'manage',
+              name: 'Alarm-Manage',
+              component: ()=>import("../components/Main/Alarm/Manage.vue")
+            }
+          ]
+        },
+
+        //reports
+        {
+          path: "reports",
+          name: "Reports",
+          component: ()=>import("../components/Main/Reports/Index.vue"),
+          children: [
+            {
+              path: '',
+              name: 'Reports-Overview',
+              component: ()=>import("../components/Main/Reports/Overview.vue")
+            },
+            {
+              path: 'manage',
+              name: 'Reports-Manage',
+              component: ()=>import("../components/Main/Reports/Manage.vue")
+            }
+          ]
+        },
+
+         //device
+         {
+          path: "device",
+          name: "Device",
+          component: ()=>import("../components/Main/Reports/Index.vue"),
+          children: [
+            {
+              path: '',
+              name: 'Device-Overview',
+              component: ()=>import("../components/Main/Device/Overview.vue")
+            },
+            {
+              path: 'manage',
+              name: 'Device-Manage',
+              component: ()=>import("../components/Main/Device/Manage.vue")
+            }
+          ]
+        },
+         
+         //team
+         {
+          path: "team",
+          name: "Team",
+          component: ()=>import("../components/Main/Team/Index.vue"),
+          children: [
+            {
+              path: '',
+              name: 'Team-Overview',
+              component: ()=>import("../components/Main/Team/Overview.vue")
+            },
+            {
+              path: 'manage',
+              name: 'Team-Manage',
+              component: ()=>import("../components/Main/Team/Manage.vue")
+            }
+          ]
+        },
+         
+         //user
+         {
+          path: "user",
+          name: "User",
+          component: ()=>import("../components/Main/User/Index.vue"),
+          children: [
+            {
+              path: '',
+              name: 'User-Overview',
+              component: ()=>import("../components/Main/User/Overview.vue")
+            },
+            {
+              path: 'manage',
+              name: 'User-Manage',
+              component: ()=>import("../components/Main/User/Manage.vue")
+            }
+          ]
         }
+         
+         
       ]
     },
     {

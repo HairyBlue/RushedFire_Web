@@ -1,91 +1,91 @@
 const sideNavData = [
     {
         name: "Dashboard",
-        path: '',
-        icon: 'material-symbols:nest-secure-alarm-outline'
+        path: '/dashboard',
+        icon: 'material-symbols:dashboard'
     },
     {
         name: "Alarm",
-        path: '',
-        icon: 'material-symbols:nest-secure-alarm-outline',
+        path: '/dashboard/alarm',
+        icon: 'material-symbols:detector-alarm',
         subpath: [
             {
                 name: "Overview",
-                path: '',
-                icon: 'material-symbols:nest-secure-alarm-outline'
+                path: '/dashboard/alarm',
+                icon: 'material-symbols:overview-key'
             },
             {
                 name: "Manage",
-                path: '',
-                icon: 'material-symbols:nest-secure-alarm-outline'
+                path: '/dashboard/alarm/manage',
+                icon: 'material-symbols:folder-managed'
             }
         ]
     },
     {
         name: "Reports",
-        path: '',
-        icon: 'material-symbols:nest-secure-alarm-outline',
+        path: '/dashboard/reports',
+        icon: 'material-symbols:report-rounded',
         subpath: [
             {
                 name: "Overview",
-                path: '',
-                icon: 'material-symbols:nest-secure-alarm-outline'
+                path: '/dashboard/reports',
+                icon: 'material-symbols:overview-key'
             },
             {
                 name: "Manage",
-                path: '',
-                icon: 'material-symbols:nest-secure-alarm-outline'
+                path: '/dashboard/reports/manage',
+                icon: 'material-symbols:folder-managed'
             }
         ]
     },
     {
         name: "Device",
-        path: '',
-        icon: 'material-symbols:nest-secure-alarm-outline',
+        path: '/dashboard/device',
+        icon: 'material-symbols:device-hub-rounded',
         subpath: [
             {
-                name: "Uptime",
-                path: '',
-                icon: 'material-symbols:nest-secure-alarm-outline'
+                name: "Overview",
+                path: '/dashboard/device',
+                icon: 'material-symbols:overview-key'
             },
             {
-                name: "Map",
-                path: '',
-                icon: 'material-symbols:nest-secure-alarm-outline'
+                name: "Manage",
+                path: '/dashboard/device/manage',
+                icon: 'material-symbols:folder-managed'
             }
         ]
     },
     {
         name: "Team",
-        path: '',
-        icon: 'material-symbols:nest-secure-alarm-outline',
+        path: '/dashboard/team',
+        icon: 'material-symbols:group',
         subpath: [
             {
                 name: "Overview",
-                path: '',
-                icon: 'material-symbols:nest-secure-alarm-outline'
+                path: '/dashboard/team',
+                icon: 'material-symbols:overview-key'
             },
             {
                 name: "Manage",
-                path: '',
-                icon: 'material-symbols:nest-secure-alarm-outline'
+                path: '/dashboard/team/manage',
+                icon: 'material-symbols:folder-managed'
             }
         ]
     },
     {
         name: "User",
-        path: '',
-        icon: 'material-symbols:nest-secure-alarm-outline',
+        path: '/dashboard/user',
+        icon: 'material-symbols:supervised-user-circle-outline',
         subpath: [
             {
                 name: "Overview",
-                path: '',
-                icon: 'material-symbols:nest-secure-alarm-outline'
+                path: '/dashboard/user',
+                icon: 'material-symbols:overview-key'
             },
             {
                 name: "Manage",
-                path: '',
-                icon: 'material-symbols:nest-secure-alarm-outline'
+                path: '/dashboard/user/manage',
+                icon: 'material-symbols:folder-managed'
             }
         ]
     }

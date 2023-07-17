@@ -1,0 +1,3 @@
+<template>
+    User Manage
+</template>
