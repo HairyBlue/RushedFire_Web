@@ -1,19 +1,16 @@
 <script setup>
-import { defineProps } from "vue"
-const props = defineProps([
-    "title"
-])
-
-
+import { onMounted, ref } from "vue"
+import { useDataStore } from "../../store/DataStore"
+const dataStore = useDataStore();
+const tablesData = ref([])
+onMounted(() => {
+    tablesData.value = dataStore.data.data.results.alarm.alarmTake10
+})
 </script>
 
 <template>
-    <div class="p-2 border border-slate-300 bg-white rounded">
-        <div class="flex flex-row justify-between">
-            <p>{{ props.title }}</p>
-            <a href="" class="text-white mr-4 pl-2 pr-2 bg-blue-400 rounded font-semibold">See All</a>
-        </div>
-        <table class="text-center min-w-full mt-6">
+    <div class="p-2">
+        <table class="text-center min-w-full">
             <thead class="font-medium border-b border-slate-400 ">
                 <tr>
                     <th class="p-2">#</th>
@@ -23,11 +20,11 @@ const props = defineProps([
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="n in 10">
-                    <td class="p-2 border-b dark:border-neutral-400">{{ n }}</td>
-                    <td class="p-2 border-b dark:border-neutral-400">ESP32</td>
-                    <td class="p-2 border-b dark:border-neutral-400">Arduino Compatible Board</td>
-                    <td class="p-2 border-b dark:border-neutral-400">34676</td>
+                <tr v-for="(tableData, index) in tablesData">
+                    <td class="p-2 border-b dark:border-neutral-400">{{ index + 1 }}</td>
+                    <td class="p-2 border-b dark:border-neutral-400">{{ tableData.model }}</td>
+                    <td class="p-2 border-b dark:border-neutral-400">{{ tableData.type }}</td>
+                    <td class="p-2 border-b dark:border-neutral-400">{{ tableData.serial }}</td>
                 </tr>
             </tbody>
         </table>

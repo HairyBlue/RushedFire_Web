@@ -61,7 +61,7 @@ const handleFocusOut = (e) => {
 };
 const getIndentation = (codeLength) => {
   if (codeLength === 2) {
-    return "\u00A0\u00A0\u00A0\u00A0\u00A0";
+    return "\u00A0\u00A0\u00A0\u00A0";
   } else if (codeLength === 3) {
     return "\u00A0\u00A0\u00A0";
   } else {

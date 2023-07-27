@@ -3,8 +3,7 @@ export default {}
 </script>
 
 <template>
-  <main>
+  <main class="font-mono">
     <router-view/>
   </main>
 </template>
-

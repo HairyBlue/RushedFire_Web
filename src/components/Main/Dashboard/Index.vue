@@ -1,12 +1,25 @@
 <script setup>
+import { onMounted, onBeforeMount, ref } from "vue"
 import LineChartDashboard from '../../Charts/LineChartDashboard.vue';
 import CountCardsDashboard from '../../Cards/CountCardsDashboard.vue';
 import AlarmsTable from "../../Tables/AlarmsTable.vue";
 import ReportsTable from "../../Tables/ReportsTable.vue"
 
+import { useDataStore } from "../../../store/DataStore"
+const dataStore = useDataStore();
+const loading = ref(true)
+
+onBeforeMount(async () => {
+    await dataStore.dashboardData()
+    loading.value = false
+})
+
 </script>
 <template>
-    <div class="w-full h-full space-y-8">
+    <div v-if="loading">
+        loading...
+    </div>
+    <div v-else class="w-full h-full space-y-8">
         <div class="h-[52%] p-2 border border-slate-300 bg-white rounded-lg">
             <LineChartDashboard />
         </div>
@@ -15,8 +28,22 @@ import ReportsTable from "../../Tables/ReportsTable.vue"
                 <CountCardsDashboard />
             </div>
             <div class="flex flex-row max-lg:flex-col w-full gap-4 pb-4">
-                <AlarmsTable class="basis-[40%]" :title="'Alarm Table'"/>
-                <ReportsTable class="basis-[60%]" :title="'Report Table'"/>
+                <div class="basis-[40%] border border-slate-300 bg-white rounded">
+                    <div class="w-full flex justify-between p-4">
+                        <p>Alarm Table</p>
+                        <router-link to="/dashboard/alarm"
+                            class=" text-white pl-2 pr-2 bg-blue-400 rounded font-semibold">See All</router-link>
+                    </div>
+                    <AlarmsTable />
+                </div>
+                <div class="basis-[60%] border border-slate-300 bg-white rounded">
+                    <div class="w-full flex justify-between p-4">
+                        <p>Reports Table</p>
+                        <router-link to="/dashboard/reports"
+                            class=" text-white pl-2 pr-2 bg-blue-400 rounded font-semibold">See All</router-link>
+                    </div>
+                    <ReportsTable />
+                </div>
             </div>
         </div>
     </div>

@@ -3,25 +3,26 @@ import { onMounted, reactive } from "vue"
 import { Icon } from '@iconify/vue';
 import { useDataStore } from '../../store/DataStore';
 const dataStore = useDataStore();
+
 const countData = reactive({
     alarm: 0,
     report: 0,
     device: 0,
     user: 0
 })
-onMounted(async () => {
-    await dataStore.dashboardData()
-    countData.alarm = dataStore?.data.data.results.alarm.alarmCount
-    countData.report = dataStore?.data.data.results.report.reportCount
-    countData.device = dataStore?.data.data.results.others.deviceCount
-    countData.user = dataStore?.data.data.results.others.userCount
-})
 
+onMounted(() => {
+        countData.alarm = dataStore?.data.data.results.alarm.alarmCount
+        countData.report = dataStore?.data.data.results.report.reportCount
+        countData.device = dataStore?.data.data.results.others.deviceCount
+        countData.user = dataStore?.data.data.results.others.userCount
+
+})
 
 </script>
 <template>
     <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <div class=" xl:h-36 2xl:h-40 p-4  border border-slate-300 bg-white rounded-lg">
+        <div class=" xl:h-36 2xl:h-40 p-4 border border-slate-300 bg-white rounded-lg">
             <div class="flex flex-row items-start place-content-between">
                 <Icon icon="material-symbols:detector-alarm" class="w-20 h-20 text-red-400" />
                 <div class="mt-2 mr-4 text-center">
@@ -45,7 +46,7 @@ onMounted(async () => {
                         Report
                     </p>
                     <p class="text-6xl">
-                        {{ countData.alarm }}
+                        {{ countData.report }}
                     </p>
                 </div>
             </div>
@@ -62,7 +63,7 @@ onMounted(async () => {
                         Device
                     </p>
                     <p class="text-6xl">
-                        {{ countData.alarm }}
+                        {{ countData.device }}
                     </p>
                 </div>
             </div>
@@ -78,7 +79,7 @@ onMounted(async () => {
                         User
                     </p>
                     <p class="text-6xl">
-                        {{ countData.alarm }}
+                        {{ countData.user }}
                     </p>
                 </div>
             </div>

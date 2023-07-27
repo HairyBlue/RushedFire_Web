@@ -18,6 +18,15 @@ export default class Api{
         return result
     } 
 
+    async getAlarmOverview() {
+        const result = await axiosInstance.get("/overview-alarm")
+        return result
+    }
+
+    async getViewEachDevice() {
+        const result = await axiosInstance.get("/view-each-device")
+        return result
+    }
     //POST
     async signup(data) {
         const result = await axiosInstance.post("/signup", data)

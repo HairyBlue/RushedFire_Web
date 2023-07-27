@@ -1,5 +1,3 @@
 <template>
-    <h1>
-        Aalrm Manage
-    </h1>
+    <h1>Alarm Manage</h1>
 </template>

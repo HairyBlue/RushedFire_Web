@@ -16,7 +16,7 @@ function isSubIndexClick(value) {
 
 <template>
     <div class="p-2">
-        <div class="lg:text-sm 2xl:text-lg font-medium flex flex-col justify-start items-start space-y-6">
+        <div class="lg:text-base 2xl:text-lg font-medium flex flex-col justify-start items-start space-y-6">
             <div class="flex flex-row justify-center items-center">
                 <img src="../../assets/House_Fire_Logo.png" alt="" class=" 2xl:w-12 w-8 ">
                 <h1 class="font-bold">RushFire</h1>
