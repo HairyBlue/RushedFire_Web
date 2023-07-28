@@ -1,34 +1,88 @@
 <script setup>
-import { onMounted, ref, watch } from "vue"
+import { onBeforeMount, ref, watch, toRaw } from "vue"
 import { Icon } from "@iconify/vue";
 import CountCard from '../../Cards/CountCard.vue';
 import LineChart from '../../Charts/LineChart.vue';
 import AlarmsTable from "../../Tables/AlarmsTable.vue";
+import { useDataStore } from "../../../store/DataStore"
+
+//Variable
+const dataStore = useDataStore()
 const currentYear = new Date().getFullYear()
-const selectedYear = ref(currentYear)
+
+//REACTIVE VARIABLE
+const dataTable = ref(null)
+const pageCount = ref(null)
+const alarmCount = ref(0)
+const page = ref(1)
+const selectedYear = ref(currentYear.toString())
 const years = ref([]);
-const isFilterShow = ref(true)
+const loading = ref(true)
+// const isFilterShow = ref(true)
+
+//HOOKS
+onBeforeMount(async () => {
+    resolve()
+    generateYearOption()
+    loading.value = false
+})
+
+watch(selectedYear, (newSelectedYear) => {
+    selectedYear.value = newSelectedYear.toString()
+    resolve()
+    console.log(selectedYear.value)
+})
+
+// METHODS
+async function resolve() {
+    await dataStore.overviewAlarmData(page.value.toString(), selectedYear.value)
+    dataTable.value = dataStore.data.data.results.alarmTake20
+    pageCount.value = dataStore.data.data.results.pageCount
+    alarmCount.value = dataStore.data.data.results.alarmCount
+}
+
 function generateYearOption() {
     for (let i = 1990; i <= 2099; i++) {
         years.value.push(i)
     }
     return
 }
-onMounted(() => {
-    generateYearOption()
-})
 
-watch(selectedYear, (newSelectedYear) => {
-    console.log(newSelectedYear)
-})
-
-function filterShow() {
-    isFilterShow.value = !isFilterShow.value
+function paginateClick(optionClick) {
+    if ("increment" == optionClick) {
+        if (page.value == pageCount.value) {
+            return
+        }
+        page.value++
+    }
+    if ("decrement" == optionClick) {
+        if (page.value == 1) {
+            return
+        }
+        page.value--
+    }
+    if ("start" == optionClick) {
+        if (page.value == 1) {
+            return
+        }
+        page.value = 1
+    }
+    if ("end" == optionClick) {
+        page.value = pageCount.value
+    }
+    resolve()
 }
+// function filterShow() {  
+//     isFilterShow.value = !isFilterShow.value
+// }
+
 </script>
 
 <template>
-    <div class="w-full h-full space-y-4 max-md:space-y-1 pb-4">
+    <div v-if="loading">
+        loading...
+    </div>
+    <div v-else class="w-full h-full space-y-4 max-md:space-y-1 pb-4">
         <div class="h-[40%] max-md:h-[60%] max-md:block max-md:space-y-2 md:flex gap-2">
             <div class="basis-[20%] max-md:h-36 ">
                 <CountCard />
@@ -72,17 +126,27 @@ function filterShow() {
                         </div>
                     </div>
                 </div> -->
-                <AlarmsTable />
+                <AlarmsTable :dataTable="dataTable" />
                 <div class="flex justify-center font-semibold w-full gap-2 hover:cursor-default">
-                    <div class="flex justify-center items-center w-10 h-10 border border-black rounded-lg">&lt;&lt;</div>
-                    <div class="flex justify-center items-center w-10 h-10 border border-black rounded-lg">&lt;</div>
-                    <div class="flex justify-center items-center w-10 h-10 border border-black rounded-lg">1</div>
-                    <div class="flex justify-center items-center w-10 h-10 border border-black rounded-lg">2</div>
-                    <div class="flex justify-center items-center w-10 h-10 border border-black rounded-lg">&gt;</div>
-                    <div class="flex justify-center items-center w-10 h-10 border border-black rounded-lg">&gt;&gt;</div>
+                    <div @click="paginateClick('start')"
+                        class="flex justify-center items-center w-10 h-10 border border-black rounded-lg">&lt;&lt;</div>
+                    <div @click="paginateClick('decrement')"
+                        class="flex justify-center items-center w-10 h-10 border border-black rounded-lg">&lt;</div>
+                    <div class="flex justify-center items-center w-10 h-10 border border-black rounded-lg">
+                        {{ page }}
+                    </div>
+                    <div @click="paginateClick('increment')"
+                        class="flex justify-center items-center w-10 h-10 border border-black rounded-lg">&gt;</div>
+                    <div @click="paginateClick('end')"
+                        class="flex justify-center items-center w-10 h-10 border border-black rounded-lg">&gt;&gt;</div>
+                </div>
+                <div class="text-center">
+                    <p>
+                        You are on page <span class="font-extrabold"> {{ page }} </span>
+                    </p>
                 </div>
             </div>
-            <div class="basis-[30%] border border-black max-lg:hidden">
+            <div class="basis-[30%] h-[600px] border border-black max-lg:hidden">
                 <div>
                 </div>
                 <div>

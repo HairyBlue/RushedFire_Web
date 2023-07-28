@@ -7,10 +7,12 @@ import ReportsTable from "../../Tables/ReportsTable.vue"
 
 import { useDataStore } from "../../../store/DataStore"
 const dataStore = useDataStore();
+const dataTable = ref(null)
 const loading = ref(true)
 
 onBeforeMount(async () => {
     await dataStore.dashboardData()
+    dataTable.value = dataStore.data.data.results.alarm.alarmTake10
     loading.value = false
 })
 
@@ -34,7 +36,7 @@ onBeforeMount(async () => {
                         <router-link to="/dashboard/alarm"
                             class=" text-white pl-2 pr-2 bg-blue-400 rounded font-semibold">See All</router-link>
                     </div>
-                    <AlarmsTable />
+                    <AlarmsTable  :dataTable="dataTable"/>
                 </div>
                 <div class="basis-[60%] border border-slate-300 bg-white rounded">
                     <div class="w-full flex justify-between p-4">

@@ -24,8 +24,8 @@ function createChart() {
     }
     if (props.value == "alarms") {
 
-        finalData.value = [10, 23, 54, 32, 78, 43, 99, 12, 78, 12, 10, 23]
-        // finalData.value = dataStore.data.data.results.alarm.alarmPost
+        // finalData.value = [10, 23, 54, 32, 78, 43, 99, 12, 78, 12, 10, 23]
+        finalData.value = dataStore.data.data.results.alarm.alarmPost
     }
     if (props.value == "reports") {
         finalData.value = [90, 100, 54, 32, 78, 43, 10, 12, 78, 12, 10, 100]
@@ -40,7 +40,7 @@ function createChart() {
                 datasets: [
                     {
                         label: "",
-                        data: toRaw(finalData.value),
+                        data: finalData.value,
                         borderWidth: 5,
                         fill: false,
                         cubicInterpolationMode: 'monotone',
@@ -55,8 +55,6 @@ function createChart() {
         }
     )
 }
-
-
 
 </script>
 

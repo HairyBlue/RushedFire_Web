@@ -1,10 +1,24 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watchEffect } from 'vue';
+import {useRoute} from "vue-router"
 import { Icon } from "@iconify/vue"
 import sideNavData from "../../data/sideNavData"
 
+const route = useRoute()
+
 const _index = ref(0);
 const _subindex = ref(0);
+
+watchEffect(() => {
+    for (let i = 0; i < sideNavData.length; i++){
+        if (sideNavData[i].path == route.path) {
+            _index.value = i
+        }
+        if (sideNavData[i + 1]?.subpath[1].path == route.path) {    
+            _subindex.value = 1
+        }
+    }   
+})
 function isIndexClick(value) {
     _subindex.value = 0
     _index.value = value

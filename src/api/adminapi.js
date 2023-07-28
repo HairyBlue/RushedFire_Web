@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toRaw } from "vue";
 const  bearerToken = localStorage.getItem("auth")
 const axiosInstance = axios.create({
     baseURL: "http://localhost:5000/admin",
@@ -18,13 +19,13 @@ export default class Api{
         return result
     } 
 
-    async getAlarmOverview() {
-        const result = await axiosInstance.get("/overview-alarm")
+    async getAlarmOverview(page, selectedYear) {
+        const result = await axiosInstance.get(`/overview-alarm?page=${page}&year=${selectedYear}`)
         return result
     }
 
-    async getViewEachDevice() {
-        const result = await axiosInstance.get("/view-each-device")
+    async getViewEachDevice(deviceId) {
+        const result = await axiosInstance.get(`/view-each-device?deviceId=${deviceId}`)
         return result
     }
     //POST

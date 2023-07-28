@@ -10,23 +10,32 @@ export const useDataStore = defineStore("dataStore", {
     actions: {
         async dashboardData() {
             try {
+                this.data = null
                 this.data = await Api.prototype.getDashboardData()    
             } catch (error) {
+                this.error = null
                 this.error = error
+                console.log(this.error)
             }
         },
-        async overviewAlarmData() {
+        async overviewAlarmData(page, selectedYear) {
             try {
-                this.data = await Api.prototype.getAlarmOverview();
+                this.data = null
+                this.data = await Api.prototype.getAlarmOverview(page, selectedYear);
             } catch (error) {
+                this.error = null
                 this.error = error
+                console.log(this.error)
             }
         },
-        async viewEachDeviceData() {
+        async viewEachDeviceData(deviceId) {
             try {
-                this.refData = await Api.prototype.getViewEachDevice();
+                this.refData = null
+                this.refData = await Api.prototype.getViewEachDevice(deviceId);
             } catch (error) {
+                this.error = null
                 this.error = error
+                console.log(this.error)
             }
         }
     }

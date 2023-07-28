@@ -1,11 +1,10 @@
 <script setup>
-import { onMounted, ref } from "vue"
-import { useDataStore } from "../../store/DataStore"
-const dataStore = useDataStore();
-const tablesData = ref([])
-onMounted(() => {
-    tablesData.value = dataStore.data.data.results.alarm.alarmTake10
+import { defineProps } from "vue"
+//PROPS
+const props = defineProps({
+    dataTable: Array
 })
+
 </script>
 
 <template>
@@ -20,11 +19,11 @@ onMounted(() => {
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(tableData, index) in tablesData">
+                <tr v-for="(item, index) in props.dataTable">
                     <td class="p-2 border-b dark:border-neutral-400">{{ index + 1 }}</td>
-                    <td class="p-2 border-b dark:border-neutral-400">{{ tableData.model }}</td>
-                    <td class="p-2 border-b dark:border-neutral-400">{{ tableData.type }}</td>
-                    <td class="p-2 border-b dark:border-neutral-400">{{ tableData.serial }}</td>
+                    <td class="p-2 border-b dark:border-neutral-400">{{ item.model }}</td>
+                    <td class="p-2 border-b dark:border-neutral-400">{{ item.type }}</td>
+                    <td class="p-2 border-b dark:border-neutral-400">{{ item.serial }}</td>
                 </tr>
             </tbody>
         </table>
