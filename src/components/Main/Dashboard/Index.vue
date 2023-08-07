@@ -36,7 +36,7 @@ onBeforeMount(async () => {
                         <router-link to="/dashboard/alarm"
                             class=" text-white pl-2 pr-2 bg-blue-400 rounded font-semibold">See All</router-link>
                     </div>
-                    <AlarmsTable  :dataTable="dataTable"/>
+                    <AlarmsTable  :dataTable="dataTable" :isClickable="false"/>
                 </div>
                 <div class="basis-[60%] border border-slate-300 bg-white rounded">
                     <div class="w-full flex justify-between p-4">
